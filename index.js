@@ -31,10 +31,21 @@ console.log('example task:', processFirstItem(['foo','bar'],function(str){return
   
   1. What is the difference between counter1 and counter2?
   
+In counter1, counterMaker returns the internally scoped counter function then declares variable counter1 as counterMaker's most recent value 
+
+In counter2, count is globally scoped and the counter2 function will return (count + 1)
+
   2. Which of the two uses a closure? How can you tell?
   
+counter1 has a closure because the actual count is stored within counterMaker but its value is made available through the globally scoped counter1
+
   3. In what scenario would the counter1 code be preferable? In what scenario would 
      counter2 be better?  
+
+Counter1 is useful for keeping track of a value that increments every time counterMaker() is called.
+
+counter2 is useful when you need the value of exactly (count +). In a broader use case scenario, functions like counter2 could be used to perform simple math operations on a globally scoped variable. 
+
 */
 
 // counter1 code
@@ -64,8 +75,20 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
+function inning(){
+  let theyScored = Math.random()
+  let inningScore = 0
+  if (theyScored <= 0.40) {
+    return inningScore
+  }
+  else if (theyScored <= 0.80) {
+    let inningScore = 1
+    return inningScore
+  }
+  else {
+    let inningScore = 2
+    return inningScore
+  }
 }
 
 
@@ -83,8 +106,16 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*Code Here*/){
-  /*Code Here*/
+function finalScore(funcToRun, numOfInnings){  //Function To Run, Number of Innings
+  const currentScore = new Object();
+  currentScore.Home = 0;
+  currentScore.Away = 0;
+
+  for (let i = 0; i < numOfInnings; i++) {
+  currentScore.Home = (currentScore.Home + funcToRun())
+  currentScore.Away = (currentScore.Away + funcToRun())
+  }
+  return currentScore
 }
 
 
@@ -101,9 +132,12 @@ For example: invoking getInningScore(inning) might return this object:
   */
 
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
-
+function getInningScore(funcToRun) { //Function to Run
+  const inningScore = new Object();
+  inningScore.Home = funcToRun()
+  inningScore.Away = funcToRun()
+  
+    return inningScore
 }
 
 
